@@ -1,0 +1,4 @@
+datos/
+credenciales.json
+*.bak
+.DS_Store

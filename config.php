@@ -4,7 +4,20 @@
  * Lo incluyen login.php y api.php. No genera salida por sí mismo.
  */
 
-define('DATOS_DIR', __DIR__ . '/datos');
+// La app vive en public_html/app/ en el servidor real, así que los datos
+// se guardan dos niveles por encima de public_html/ (fuera de la raíz web).
+// En local (donde no existe esa estructura de carpetas) se usa datos/ junto
+// a este archivo, para que siga funcionando sin configurar nada.
+$directorioApp = __DIR__;
+$directorioPublicHtml = dirname($directorioApp);
+$directorioDominio = dirname($directorioApp, 2);
+$datosFueraDeLaWeb = $directorioDominio . '/datos';
+$datosDentroDeLaWeb = $directorioApp . '/datos';
+
+$pareceDespliegueReal = basename($directorioPublicHtml) === 'public_html'
+    && (is_dir($datosFueraDeLaWeb) || is_writable($directorioDominio));
+
+define('DATOS_DIR', $pareceDespliegueReal ? $datosFueraDeLaWeb : $datosDentroDeLaWeb);
 define('CREDENCIALES_FILE', DATOS_DIR . '/credenciales.json');
 define('ADJUNTOS_DIR', DATOS_DIR . '/adjuntos');
 
