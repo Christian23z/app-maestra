@@ -274,18 +274,30 @@
   .vence.urgente{color:var(--alta);font-weight:500;}
   .chip-activa{color:var(--acento);font-weight:600;}
 
+  .pila-tareas{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;align-items:start;}
+  .fila-tarea{display:flex;align-items:center;gap:9px;min-width:0;}
+  .fila-tarea .tarjeta{flex:1;min-width:0;}
+  .interruptor{
+    flex-shrink:0;position:relative;width:32px;height:19px;border-radius:999px;padding:0;
+    background:var(--superficie-3);border:1px solid var(--borde-2);box-shadow:inset 0 1px 2px rgba(20,22,26,.35);
+  }
+  .interruptor:hover{border-color:var(--borde-3);}
+  .interruptor-bola{
+    position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;
+    background:var(--texto-3);transition:transform .15s ease,background-color .15s ease;
+  }
+  .interruptor[aria-checked="true"]{background:var(--acento);border-color:transparent;}
+  .interruptor[aria-checked="true"] .interruptor-bola{transform:translateX(13px);background:#fff;}
   .tarjeta.con-acciones{display:flex;align-items:stretch;gap:2px;padding:3px 6px 3px 17px;}
   .tarjeta-cuerpo{flex:1;min-width:0;padding:7px 2px;}
   .tarjeta-titulo-btn{
     display:block;width:100%;text-align:left;background:none;border:0;padding:3px 0;
     color:inherit;font:inherit;letter-spacing:inherit;
   }
-  .tarjeta-activar,.tarjeta-completar,.tarjeta-reabrir{
+  .tarjeta-completar,.tarjeta-reabrir{
     flex-shrink:0;align-self:center;background:none;border:0;color:var(--texto-3);
     padding:7px 8px;border-radius:7px;font-size:12.5px;
   }
-  .tarjeta-activar:hover{color:var(--acento);background:rgba(255,255,255,.07);}
-  .tarjeta-activar[aria-pressed="true"]{color:var(--acento);}
   .tarjeta-completar:hover{color:var(--alta);background:rgba(229,140,140,.12);}
   .tarjeta-reabrir:hover{color:var(--texto);background:rgba(255,255,255,.07);}
   .vence.proxima{color:var(--media);}
@@ -402,7 +414,7 @@
   .nota-fila{display:flex;align-items:flex-start;gap:4px;border-radius:7px;}
   .nota-fila:hover{background:rgba(255,255,255,.03);}
   .nota-plegar{
-    flex-shrink:0;width:20px;height:26px;margin-top:1px;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;width:20px;height:20px;margin-top:1px;display:flex;align-items:center;justify-content:center;
     background:none;border:0;color:var(--texto-3);border-radius:5px;padding:0;
   }
   .nota-plegar .ico{font-size:16px;transition:transform .15s ease;}
@@ -411,12 +423,12 @@
   .nota-plegar.vacio{visibility:hidden;pointer-events:none;}
   .nota-bullet{
     flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--texto-3);
-    margin:13px 6px 0 2px;
+    margin:9px 6px 0 2px;
   }
   .nota-nodo.tiene-hijos > .nota-fila .nota-bullet{background:var(--texto-2);}
   .nota-texto{
     flex:1;min-width:0;border:0;background:none;color:var(--texto);
-    font-family:var(--sans);font-size:14.5px;line-height:1.6;padding:4px 6px;
+    font-family:var(--sans);font-size:14.5px;line-height:1.6;padding:1px 6px;
     border-radius:6px;letter-spacing:-.005em;
   }
   .nota-texto::placeholder{color:var(--texto-3);}
@@ -541,6 +553,7 @@
     .lienzo{padding:16px 18px 44px;}
     .columna-mini{padding:14px;}
     .pila-mini{grid-template-columns:1fr;}
+    .pila-tareas{grid-template-columns:1fr;}
     .titulo{font-size:23px;}
     .titulo-proyecto{font-size:27px;}
     .titulo-proyecto .titulo-icono{width:34px;height:34px;}
@@ -1130,7 +1143,7 @@
                  '<span class="columna-cuenta">' + enCol.length + '</span>' +
                  (p.seccionesTareas.length > 1 ? '<button class="columna-mini-borrar" data-colborrar-tarea="' + col.id + '" title="Eliminar sección"><span class="ico ico-sm">delete</span></button>' : "") +
                '</header>' +
-               '<div class="pila">' + enCol.map(function(t){ return pintarTarjetaProyecto(t); }).join("") + rapida + '</div>' +
+               '<div class="pila-tareas">' + enCol.map(function(t){ return pintarTarjetaProyecto(t); }).join("") + rapida + '</div>' +
              '</section>';
     }).join("") + seccionTrailer + '</div>';
 
@@ -1143,7 +1156,7 @@
                   '<h2 class="seccion-titulo">Finalizadas</h2>' +
                   '<span class="seccion-cuenta">' + hechas.length + '</span>' +
                 '</div>' +
-                '<div class="pila">' + (hechas.length ? hechas.map(function(t){ return pintarTarjetaFinalizada(t); }).join("") : '<p class="cargando" style="padding:16px 0">Todavía ninguna.</p>') + '</div>' +
+                '<div class="pila-tareas">' + (hechas.length ? hechas.map(function(t){ return pintarTarjetaFinalizada(t); }).join("") : '<p class="cargando" style="padding:16px 0">Todavía ninguna.</p>') + '</div>' +
               '</section>';
     }
 
@@ -1165,24 +1178,21 @@
     if(t.vence){
       pie.push('<span class="vence' + claseVence(t.vence, false) + '">' + esc(textoVence(t.vence)) + '</span>');
     }
-    var chipContenido;
     if(subtareas.length){
       var hechas = subtareas.filter(function(s){ return s.hecha; }).length;
       var pct = Math.round((hechas / subtareas.length) * 100);
-      chipContenido = '<span>' + hechas + "/" + subtareas.length + '</span>' +
-                      '<span class="barra"><span class="barra-relleno" style="width:' + pct + '%"></span></span>';
-    } else {
-      chipContenido = '<span class="ico ico-sm">add</span>';
+      pie.push(
+        '<button class="chip-progreso' + (expandido ? " expandido" : "") + '" data-plegar-subtareas="' + t.id + '" aria-expanded="' + expandido + '" title="Subtareas">' +
+          '<span class="ico ico-sm chip-progreso-flecha">arrow_drop_down</span>' +
+          '<span>' + hechas + "/" + subtareas.length + '</span>' +
+          '<span class="barra"><span class="barra-relleno" style="width:' + pct + '%"></span></span>' +
+        '</button>'
+      );
     }
-    pie.push(
-      '<button class="chip-progreso' + (expandido ? " expandido" : "") + '" data-plegar-subtareas="' + t.id + '" aria-expanded="' + expandido + '" title="Subtareas">' +
-        '<span class="ico ico-sm chip-progreso-flecha">arrow_drop_down</span>' + chipContenido +
-      '</button>'
-    );
     if(t.notas) pie.push('<span class="nota-marca" title="Tiene notas">Notas</span>');
 
     var subtareasHtml = "";
-    if(expandido){
+    if(expandido && subtareas.length){
       subtareasHtml = '<div class="checklist tarjeta-checklist">' +
         subtareas.map(function(s){
           return '<label class="check-fila">' +
@@ -1195,22 +1205,24 @@
       '</div>';
     }
 
-    return '<div class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
-             '<button class="tarjeta-activar" data-activar="' + t.id + '" aria-pressed="' + !!t.activa + '" aria-label="' + (t.activa ? "Quitar en curso" : "Marcar en curso") + '" title="En curso"><span class="ico ico-sm">bolt</span></button>' +
-             '<div class="tarjeta-cuerpo">' +
-               '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '"><span class="tarjeta-titulo">' + esc(t.titulo) + '</span></button>' +
-               '<div class="tarjeta-pie">' + pie.join("") + '</div>' +
-               subtareasHtml +
+    return '<div class="fila-tarea">' +
+             '<button class="interruptor" role="switch" data-activar="' + t.id + '" aria-checked="' + !!t.activa + '" aria-label="' + (t.activa ? "Quitar en curso" : "Marcar en curso") + '" title="En curso"><span class="interruptor-bola"></span></button>' +
+             '<div class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
+               '<div class="tarjeta-cuerpo">' +
+                 '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '"><span class="tarjeta-titulo">' + esc(t.titulo) + '</span></button>' +
+                 (pie.length ? '<div class="tarjeta-pie">' + pie.join("") + '</div>' : "") +
+                 subtareasHtml +
+               '</div>' +
+               '<button class="tarjeta-completar" data-completar="' + t.id + '" aria-label="Marcar como hecha" title="Marcar como hecha"><span class="ico ico-sm">close</span></button>' +
              '</div>' +
-             '<button class="tarjeta-completar" data-completar="' + t.id + '" aria-label="Marcar como hecha" title="Marcar como hecha"><span class="ico ico-sm">close</span></button>' +
            '</div>';
   }
 
   function pintarTarjetaFinalizada(t){
     return '<div class="tarjeta con-acciones hecha p-' + t.prioridad + '" data-tarea="' + t.id + '">' +
-             '<button class="tarjeta-cuerpo" data-tarea="' + t.id + '">' +
-               '<span class="tarjeta-titulo">' + esc(t.titulo) + '</span>' +
-             '</button>' +
+             '<div class="tarjeta-cuerpo">' +
+               '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '"><span class="tarjeta-titulo">' + esc(t.titulo) + '</span></button>' +
+             '</div>' +
              '<button class="tarjeta-reabrir" data-reabrir="' + t.id + '" aria-label="Reabrir tarea" title="Reabrir"><span class="ico ico-sm">restart_alt</span></button>' +
            '</div>';
   }
@@ -2267,7 +2279,7 @@
     if(estado.vista === "proyecto" && estado.subVistaProyecto === "tablero"){
       if(e.target.closest(".tarjeta-rapida")) return;
       if(e.target.closest(".columna-mini-cabecera")) return;
-      if(e.target.closest(".tarjeta")) return;
+      if(e.target.closest(".fila-tarea")) return;
       var col = e.target.closest(".seccion-tarea");
       if(col && (!creacionRapida || creacionRapida.tipo !== "tarea" || creacionRapida.columna !== col.dataset.col)){
         creacionRapida = { tipo:"tarea", columna: col.dataset.col };
