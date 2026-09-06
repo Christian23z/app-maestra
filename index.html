@@ -611,10 +611,16 @@
 
   /* ---------- tarjeta: sombreado + barra de carga ---------- */
   .tarjeta{
+    background:radial-gradient(150% 100% at 50% -40%,rgba(255,255,255,.05),transparent 62%),linear-gradient(180deg,#282D36,#1F242C) !important;
+    border:1px solid rgba(255,255,255,.07);
     border-radius:14px;
     box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),0 24px 54px rgba(12,14,17,.34),var(--filo);
   }
+  .tarjeta .tarjeta-titulo{font-size:15px;font-weight:600;color:#F4F5F8;}
+  .tarjeta.hecha .tarjeta-titulo{color:#868D99;}
   .tarjeta:hover{
+    background:radial-gradient(150% 100% at 50% -40%,rgba(255,255,255,.07),transparent 62%),linear-gradient(180deg,#2E343E,#252B34) !important;
+    border-color:rgba(255,255,255,.14);
     transform:translateY(-2px);
     box-shadow:0 2px 4px rgba(12,14,17,.55),0 14px 30px rgba(12,14,17,.44),0 38px 78px rgba(12,14,17,.42),var(--filo);
   }
@@ -631,7 +637,7 @@
   .tarjeta-carga > span{
     display:block;position:absolute;top:0;bottom:0;left:0;right:0;
     transform-origin:left center;will-change:transform;
-    background:linear-gradient(90deg,var(--acento-suave),var(--acento));
+    background:var(--acento);
     box-shadow:0 0 12px var(--acento-suave);
   }
   @keyframes carga-tarjeta{from{transform:scaleX(0);}to{transform:scaleX(1);}}
