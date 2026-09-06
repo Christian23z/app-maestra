@@ -178,6 +178,13 @@
   .titulo-proyecto{font-size:33px;gap:14px;}
   .titulo-proyecto .titulo-icono{width:40px;height:40px;border-radius:12px;}
   .titulo-proyecto .titulo-icono .ico{font-size:24px;}
+  .titulo-editar{
+    flex-shrink:0;background:none;border:0;color:var(--texto-3);
+    padding:6px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
+  }
+  .titulo-editar:hover{color:var(--texto);background:rgba(255,255,255,.07);}
+  .titulo-editar .ico{font-size:17px;}
+  .titulo-proyecto .titulo-editar .ico{font-size:19px;}
   .subtitulo{color:var(--texto-3);font-size:12.5px;margin:6px 0 0;letter-spacing:.01em;font-family:var(--mono);}
   .cabecera-acciones{margin-left:auto;display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
 
@@ -609,27 +616,51 @@
     .tarjeta.activa{animation:parpadeo-borde 1.4s ease-in-out infinite;}
   }
 
-  /* ---------- tarjeta: sombreado + barra de carga ---------- */
+  /* ---------- tarjeta como la maqueta ---------- */
   .tarjeta{
-    background:radial-gradient(150% 100% at 50% -40%,rgba(255,255,255,.05),transparent 62%),linear-gradient(180deg,#282D36,#1F242C) !important;
+    position:relative;overflow:hidden;border-radius:14px;padding:14px 16px;
+    background:radial-gradient(150% 100% at 50% -40%,rgba(255,255,255,.05),transparent 62%),linear-gradient(180deg,#282D36,#1F242C);
     border:1px solid rgba(255,255,255,.07);
-    border-radius:14px;
-    box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),0 24px 54px rgba(12,14,17,.34),var(--filo);
+    box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),0 24px 54px rgba(12,14,17,.34),inset 0 1px 0 rgba(255,255,255,.075);
   }
-  .tarjeta .tarjeta-titulo{font-size:15px;font-weight:600;color:#F4F5F8;}
-  .tarjeta.hecha .tarjeta-titulo{color:#868D99;}
   .tarjeta:hover{
-    background:radial-gradient(150% 100% at 50% -40%,rgba(255,255,255,.07),transparent 62%),linear-gradient(180deg,#2E343E,#252B34) !important;
-    border-color:rgba(255,255,255,.14);
-    transform:translateY(-2px);
-    box-shadow:0 2px 4px rgba(12,14,17,.55),0 14px 30px rgba(12,14,17,.44),0 38px 78px rgba(12,14,17,.42),var(--filo);
+    background:radial-gradient(150% 100% at 50% -40%,rgba(255,255,255,.07),transparent 62%),linear-gradient(180deg,#2E343E,#252B34);
+    border-color:rgba(255,255,255,.14);transform:translateY(-2px);
+    box-shadow:0 2px 4px rgba(12,14,17,.55),0 14px 30px rgba(12,14,17,.44),0 38px 78px rgba(12,14,17,.42),inset 0 1px 0 rgba(255,255,255,.1);
   }
-  .tarjeta:active{transform:translateY(0);box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),var(--filo);}
+  .tarjeta:active{transform:translateY(0);}
   .tarjeta.activa{
-    border-color:var(--acento);
-    box-shadow:0 1px 2px rgba(12,14,17,.55),0 10px 24px rgba(12,14,17,.4),0 28px 60px rgba(12,14,17,.36),var(--filo),0 0 0 4px var(--acento-suave);
+    border-color:rgba(255,255,255,.07);
+    box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),0 24px 54px rgba(12,14,17,.34),inset 0 1px 0 rgba(255,255,255,.075);
+    animation:none;
   }
-  .tarjeta.con-acciones{padding-bottom:6px;}
+  .tarjeta.vencida{border-color:rgba(229,140,140,.55);}
+  .tarjeta .tarjeta-titulo{font-size:15px;font-weight:600;line-height:1.4;color:#F4F5F8;}
+  .tarjeta.hecha .tarjeta-titulo{color:#868D99;}
+  .punto-activo{display:none;}
+
+  .tarjeta.con-acciones{display:flex;align-items:flex-start;gap:10px;padding:13px 14px 13px;}
+  .tarjeta-cuerpo{padding:0;}
+  .tarjeta.con-acciones .tarjeta-completar,
+  .tarjeta.con-acciones .tarjeta-reabrir{
+    align-self:flex-start;width:28px;height:28px;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(255,255,255,.1);border-radius:9px;
+    background:rgba(255,255,255,.03);color:#868D99;
+  }
+  .tarjeta.con-acciones .tarjeta-completar:hover{color:#E58C8C;background:rgba(229,140,140,.14);border-color:rgba(229,140,140,.4);}
+  .tarjeta.con-acciones .tarjeta-reabrir:hover{color:#F4F5F8;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);}
+
+  .tarjeta-pie{margin-top:8px;}
+  .tarjeta-pie-activar{margin-top:11px;padding:14px 0 6px;border-top:1px solid rgba(255,255,255,.07);}
+  .tarjeta-estado{margin-left:9px;font-size:12px;font-weight:600;color:#868D99;}
+  .tarjeta.activa .tarjeta-estado{color:#A99BE6;}
+  .tarjeta-live{
+    margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:#A99BE6;
+    animation:parpadeo-activo 1.6s ease-in-out infinite;
+  }
+
   .tarjeta-carga{
     display:block;position:absolute;left:0;right:0;bottom:0;height:3px;
     background:rgba(255,255,255,.07);overflow:hidden;border-radius:0 0 14px 14px;
@@ -637,21 +668,24 @@
   .tarjeta-carga > span{
     display:block;position:absolute;top:0;bottom:0;left:0;right:0;
     transform-origin:left center;will-change:transform;
-    background:var(--acento);
-    box-shadow:0 0 12px var(--acento-suave);
+    background:#A99BE6;box-shadow:0 0 12px rgba(169,155,230,.4);
+    animation:carga-tarjeta 6s linear infinite;
   }
   @keyframes carga-tarjeta{from{transform:scaleX(0);}to{transform:scaleX(1);}}
-  .tarjeta-estado{margin-left:9px;font-size:12px;font-weight:600;color:var(--texto-3);}
-  .tarjeta.activa .tarjeta-estado{color:var(--acento);}
-  .tarjeta-live{
-    margin-left:auto;font-family:var(--mono);font-size:10px;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--acento);
+  .tarjeta .punto-activo{background:#A99BE6;}
+  .tarjeta .interruptor[aria-checked="true"]{background:rgba(169,155,230,.16);border-color:#A99BE6;}
+  .tarjeta .interruptor[aria-checked="true"] .interruptor-bola{background:#A99BE6;}
+  .tarjeta.activa{border-color:rgba(255,255,255,.09);}
+
+  /* nombre del proyecto arriba, como en la maqueta */
+  .tarjeta-proyecto{
+    display:flex;align-items:center;gap:8px;margin-bottom:7px;
+    font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.12em;
+    text-transform:uppercase;color:#868D99;
   }
-  @media (prefers-reduced-motion:no-preference){
-    .tarjeta-carga > span{animation:carga-tarjeta 6s linear infinite;}
-    .tarjeta-live{animation:parpadeo-activo 1.6s ease-in-out infinite;}
-    .tarjeta.activa{animation:none;}
-  }
+  .tarjeta-proyecto .punto{width:6px;height:6px;box-shadow:none;}
+  .tarjeta.hecha .tarjeta-proyecto{color:#5F6672;}
+  .tarjeta.hecha .tarjeta-proyecto .punto{background:#5F6672 !important;}
 </style>
 </head>
 <body>
@@ -1055,7 +1089,8 @@
       var enAdjuntos = subvista === "adjuntos";
       var enNotas = subvista === "notas";
       claseTitulo = " titulo-proyecto";
-      titulo = '<span class="titulo-icono" style="background:' + esc(hexARgba(p.color, .18)) + ';color:' + esc(p.color) + '"><span class="ico">' + esc(p.icono || "folder") + '</span></span>' + esc(p.nombre);
+      titulo = '<span class="titulo-icono" style="background:' + esc(hexARgba(p.color, .18)) + ';color:' + esc(p.color) + '"><span class="ico">' + esc(p.icono || "folder") + '</span></span>' + esc(p.nombre) +
+               '<button class="titulo-editar" id="btn-editar-proyecto" aria-label="Editar proyecto" title="Editar proyecto"><span class="ico">edit</span></button>';
       sub = ab + (ab === 1 ? " tarea abierta" : " tareas abiertas") + (ve ? ", " + ve + (ve === 1 ? " vencida" : " vencidas") : "");
       acciones = (p.urlClaude
                    ? '<a class="btn btn-plano" href="' + esc(p.urlClaude) + '" target="_blank" rel="noopener noreferrer"><span class="ico">smart_toy</span>Abrir en Claude</a>'
@@ -1063,14 +1098,11 @@
                  (p.url
                    ? '<a class="btn btn-plano" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span class="ico">open_in_new</span>Abrir sitio</a>'
                    : "") +
-                 '<button class="btn btn-plano" id="btn-editar-proyecto"><span class="ico">tune</span>Editar proyecto</button>' +
-                 (enTablero
-                   ? '<button class="btn btn-principal" id="btn-nueva-tarea"><span class="ico">add</span>Nueva tarea</button>'
-                   : enEnlaces
-                     ? '<button class="btn btn-principal" id="btn-nuevo-enlace"><span class="ico">add_link</span>Nuevo enlace</button>'
-                     : enAdjuntos
-                       ? '<button class="btn btn-principal" id="btn-nuevo-adjunto"><span class="ico">upload_file</span>Subir archivo</button>'
-                       : "");
+                 (enEnlaces
+                   ? '<button class="btn btn-principal" id="btn-nuevo-enlace"><span class="ico">add_link</span>Nuevo enlace</button>'
+                   : enAdjuntos
+                     ? '<button class="btn btn-principal" id="btn-nuevo-adjunto"><span class="ico">upload_file</span>Subir archivo</button>'
+                     : "");
       subtabsHtml =
         '<div class="subtabs">' +
           '<button class="subtab" data-subvista="tablero" aria-current="' + enTablero + '"><span class="ico">view_kanban</span>Tablero</button>' +
@@ -1151,12 +1183,14 @@
       pie.push('<span class="chip-progreso"><span>' + hechas + "/" + t.subtareas.length + '</span>' +
                '<span class="barra"><span class="barra-relleno" style="width:' + pct + '%"></span></span></span>');
     }
-    if(mostrarProyecto && p){
-      pie.push('<span class="chip"><span class="punto" style="background:' + esc(p.color) + '"></span>' + esc(p.nombre) + '</span>');
-    }
     if(t.notas) pie.push('<span class="nota-marca" title="Tiene notas">Notas</span>');
 
+    var cabecera = (mostrarProyecto && p)
+      ? '<span class="tarjeta-proyecto"><span class="punto" style="background:' + esc(p.color) + '"></span>' + esc(p.nombre) + '</span>'
+      : "";
+
     return '<button class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
+             cabecera +
              '<span class="tarjeta-titulo">' + esc(t.titulo) + '</span>' +
              (pie.length ? '<span class="tarjeta-pie">' + pie.join("") + '</span>' : "") +
              (!hecha && t.activa ? '<span class="tarjeta-carga"><span></span></span>' : "") +
@@ -1196,7 +1230,7 @@
   function pintarTareasProyecto(lienzo){
     var p = proyecto(estado.proyectoActivo);
     var suyas = estado.tareas.filter(function(t){
-      return t.proyectoId === p.id && t.estado !== "hecho" && coincide(t);
+      return t.proyectoId === p.id && (filtros.verHechas || t.estado !== "hecho") && coincide(t);
     });
 
     var seccionTrailer = creandoSeccionTarea
@@ -1205,7 +1239,11 @@
 
     var html = '<div class="tablero-mini">' + p.seccionesTareas.map(function(col){
       var enCol = suyas.filter(function(t){ return t.seccion === col.id; });
-      enCol.sort(function(a, b){ return (a.activa ? 0 : 1) - (b.activa ? 0 : 1); });
+      enCol.sort(function(a, b){
+        var pa = a.estado === "hecho" ? 2 : (a.activa ? 0 : 1);
+        var pb = b.estado === "hecho" ? 2 : (b.activa ? 0 : 1);
+        return pa - pb;
+      });
       var esRapida = creacionRapida && creacionRapida.tipo === "tarea" && creacionRapida.columna === col.id;
       var rapida = esRapida
         ? '<input type="text" class="tarjeta-rapida" id="input-rapido" placeholder="Título de la tarea y Enter…" maxlength="200">'
@@ -1220,19 +1258,6 @@
              '</section>';
     }).join("") + seccionTrailer + '</div>';
 
-    if(filtros.verHechas){
-      var hechas = estado.tareas.filter(function(t){
-        return t.proyectoId === p.id && t.estado === "hecho" && coincide(t);
-      });
-      html += '<section class="seccion-finalizadas">' +
-                '<div class="seccion-cabecera">' +
-                  '<h2 class="seccion-titulo">Finalizadas</h2>' +
-                  '<span class="seccion-cuenta">' + hechas.length + '</span>' +
-                '</div>' +
-                '<div class="pila-tareas">' + (hechas.length ? hechas.map(function(t){ return pintarTarjetaFinalizada(t); }).join("") : '<p class="cargando" style="padding:16px 0">Todavía ninguna.</p>') + '</div>' +
-              '</section>';
-    }
-
     lienzo.innerHTML = html;
 
     activarCreacionRapida();
@@ -1241,14 +1266,18 @@
 
   function pintarTarjetaProyecto(t){
     var n = diasHasta(t.vence);
-    var clases = "tarjeta con-acciones" + (t.activa ? " activa" : "") +
-                 (n !== null && n < 0 ? " vencida" : "");
+    var hecha = t.estado === "hecho";
+    var activa = !hecha && t.activa;
+    var clases = "tarjeta con-acciones" + (hecha ? " hecha" : "") + (activa ? " activa" : "") +
+                 (!hecha && n !== null && n < 0 ? " vencida" : "");
 
     var subtareas = t.subtareas || [];
     var expandido = !!subtareasExpandidas[t.id];
 
     var pie = [];
-    if(t.vence){
+    if(hecha){
+      pie.push('<span class="vence">Completada</span>');
+    } else if(t.vence){
       pie.push('<span class="vence' + claseVence(t.vence, false) + '">' + esc(textoVence(t.vence)) + '</span>');
     }
     if(subtareas.length){
@@ -1278,23 +1307,26 @@
       '</div>';
     }
 
-    var activarHtml = '<button class="interruptor" role="switch" data-activar="' + t.id + '" aria-checked="' + !!t.activa + '" aria-label="' + (t.activa ? "Quitar en curso" : "Marcar en curso") + '" title="En curso"><span class="interruptor-bola"></span></button>';
+    var activarHtml = '<button class="interruptor" role="switch" data-activar="' + t.id + '" aria-checked="' + !!activa + '"' + (hecha ? " disabled" : "") + ' aria-label="' + (activa ? "Quitar en curso" : "Marcar en curso") + '" title="En curso"><span class="interruptor-bola"></span></button>';
+    var accionHtml = hecha
+      ? '<button class="tarjeta-reabrir" data-reabrir="' + t.id + '" aria-label="Reabrir tarea" title="Reabrir"><span class="ico ico-sm">restart_alt</span></button>'
+      : '<button class="tarjeta-completar" data-completar="' + t.id + '" aria-label="Marcar como hecha" title="Marcar como hecha"><span class="ico ico-sm">close</span></button>';
 
     return '<div class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
              '<div class="tarjeta-cuerpo">' +
                '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '">' +
-                 (t.activa ? '<span class="punto-activo"></span>' : "") +
+                 (activa ? '<span class="punto-activo"></span>' : "") +
                  '<span class="tarjeta-titulo">' + esc(t.titulo) + '</span>' +
                '</button>' +
                (pie.length ? '<div class="tarjeta-pie">' + pie.join("") + '</div>' : "") +
                subtareasHtml +
                '<div class="tarjeta-pie-activar">' + activarHtml +
-                 '<span class="tarjeta-estado">' + (t.activa ? "En curso" : "En espera") + '</span>' +
-                 (t.activa ? '<span class="tarjeta-live">&#9679; live</span>' : "") +
+                 '<span class="tarjeta-estado">' + (hecha ? "Cerrada" : activa ? "En curso" : "En espera") + '</span>' +
+                 (activa ? '<span class="tarjeta-live">&#9679; live</span>' : "") +
                '</div>' +
              '</div>' +
-             '<button class="tarjeta-completar" data-completar="' + t.id + '" aria-label="Marcar como hecha" title="Marcar como hecha"><span class="ico ico-sm">close</span></button>' +
-             (t.activa ? '<div class="tarjeta-carga"><span></span></div>' : "") +
+             accionHtml +
+             (activa ? '<div class="tarjeta-carga"><span></span></div>' : "") +
            '</div>';
   }
 
