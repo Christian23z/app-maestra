@@ -231,7 +231,12 @@
     background:rgba(255,255,255,.05);border-radius:999px;padding:0 7px;line-height:17px;
   }
   .pila{display:flex;flex-direction:column;gap:9px;}
-  .seccion-finalizadas{margin-top:22px;max-width:1080px;}
+  .seccion-finalizadas{
+    margin-top:22px;max-width:1080px;
+    background:radial-gradient(140% 60% at 50% -20%,rgba(255,255,255,.03),transparent 60%),linear-gradient(180deg,#1E222A,#181B21);
+    border:1px solid var(--borde);border-radius:14px;padding:18px 20px 20px;box-shadow:var(--s2),var(--filo);
+  }
+  .seccion-finalizadas .seccion-cabecera{margin-bottom:16px;}
 
   .tarjeta-rapida{
     display:block;width:100%;text-align:left;
@@ -244,28 +249,33 @@
   /* ---------- tarjeta ---------- */
   .tarjeta{
     position:relative;display:block;width:100%;text-align:left;overflow:hidden;
-    background:linear-gradient(180deg,#272C34,#212630);border:1px solid var(--borde);
-    border-radius:var(--radio);padding:13px 15px 13px 17px;color:var(--texto);
+    background:radial-gradient(140% 80% at 50% -30%,rgba(255,255,255,.035),transparent 60%),linear-gradient(180deg,#272C34,#212630);
+    border:1px solid var(--borde);border-radius:8px;padding:14px 16px;color:var(--texto);
     box-shadow:var(--s2),var(--filo);
   }
-  .tarjeta::before{
-    content:"";position:absolute;left:0;top:11px;bottom:11px;width:3px;
-    border-radius:0 999px 999px 0;background:var(--baja);
-  }
   .tarjeta:hover{
-    background:linear-gradient(180deg,#2E343E,#252B34);border-color:var(--borde-2);
-    box-shadow:var(--s3),var(--filo);transform:translateY(-1px);
+    background:radial-gradient(140% 80% at 50% -30%,rgba(255,255,255,.05),transparent 60%),linear-gradient(180deg,#2E343E,#252B34);
+    border-color:var(--borde-2);box-shadow:var(--s3),var(--filo);transform:translateY(-1px);
   }
   .tarjeta:active{transform:translateY(0);box-shadow:var(--s2);}
-  .tarjeta.p-alta::before{background:var(--alta);}
-  .tarjeta.p-media::before{background:var(--media);}
-  .tarjeta.p-baja::before{background:var(--baja);}
-  .tarjeta.vencida::before{top:0;bottom:0;width:3px;border-radius:0;}
+  .tarjeta.vencida{border-color:var(--alta);}
   .tarjeta.hecha{opacity:.5;box-shadow:var(--s1);}
   .tarjeta.hecha .tarjeta-titulo{color:var(--texto-3);text-decoration:line-through;}
   .tarjeta.arrastrando{opacity:.3;}
   .tarjeta.activa{border-color:var(--acento);box-shadow:var(--s2),var(--filo),0 0 0 3px var(--acento-suave);}
+  @keyframes parpadeo-borde{
+    0%,100%{box-shadow:var(--s2),var(--filo),0 0 0 3px var(--acento-suave);}
+    50%{box-shadow:var(--s2),var(--filo),0 0 0 6px var(--acento-suave);}
+  }
   .tarjeta-titulo{font-weight:500;line-height:1.45;overflow-wrap:anywhere;}
+  .punto-activo{
+    display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--acento);
+    margin-right:7px;flex-shrink:0;vertical-align:middle;
+  }
+  @keyframes parpadeo-activo{
+    0%,100%{opacity:1;}
+    50%{opacity:.25;}
+  }
   .tarjeta-pie{
     display:flex;align-items:center;gap:9px;margin-top:9px;
     font-size:11.5px;color:var(--texto-3);flex-wrap:wrap;
@@ -275,25 +285,25 @@
   .chip-activa{color:var(--acento);font-weight:600;}
 
   .pila-tareas{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;align-items:start;}
-  .fila-tarea{display:flex;align-items:center;gap:9px;min-width:0;}
-  .fila-tarea .tarjeta{flex:1;min-width:0;}
-  .interruptor{
-    flex-shrink:0;position:relative;width:32px;height:19px;border-radius:999px;padding:0;
-    background:var(--superficie-3);border:1px solid var(--borde-2);box-shadow:inset 0 1px 2px rgba(20,22,26,.35);
-  }
-  .interruptor:hover{border-color:var(--borde-3);}
-  .interruptor-bola{
-    position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;
-    background:var(--texto-3);transition:transform .15s ease,background-color .15s ease;
-  }
-  .interruptor[aria-checked="true"]{background:var(--acento);border-color:transparent;}
-  .interruptor[aria-checked="true"] .interruptor-bola{transform:translateX(13px);background:#fff;}
-  .tarjeta.con-acciones{display:flex;align-items:stretch;gap:2px;padding:3px 6px 3px 17px;}
+  .tarjeta.con-acciones{display:flex;align-items:stretch;gap:2px;padding:3px 6px 3px 12px;}
   .tarjeta-cuerpo{flex:1;min-width:0;padding:7px 2px;}
   .tarjeta-titulo-btn{
     display:block;width:100%;text-align:left;background:none;border:0;padding:3px 0;
     color:inherit;font:inherit;letter-spacing:inherit;
   }
+  .tarjeta-pie-activar{display:flex;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--borde);}
+  .interruptor{
+    flex-shrink:0;position:relative;width:32px;height:19px;border-radius:999px;padding:0;
+    background:var(--superficie-3);border:1px solid var(--borde-2);box-shadow:inset 0 1px 2px rgba(20,22,26,.35);
+    transition:background-color .15s ease,border-color .15s ease;
+  }
+  .interruptor:hover{border-color:var(--borde-3);}
+  .interruptor-bola{
+    position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--texto-3);
+    transition:transform .15s ease,background-color .15s ease;
+  }
+  .interruptor[aria-checked="true"]{background:var(--acento-suave);border-color:var(--acento);}
+  .interruptor[aria-checked="true"] .interruptor-bola{transform:translateX(13px);background:var(--acento);}
   .tarjeta-completar,.tarjeta-reabrir{
     flex-shrink:0;align-self:center;background:none;border:0;color:var(--texto-3);
     padding:7px 8px;border-radius:7px;font-size:12.5px;
@@ -337,20 +347,24 @@
   .lista .pila{gap:9px;}
 
   /* ---------- ideas / conocimiento / herramientas ---------- */
-  .tablero-mini{display:flex;flex-direction:column;gap:18px;max-width:1080px;padding-bottom:10px;}
+  .tablero-mini{display:flex;flex-direction:column;gap:20px;max-width:1080px;padding-bottom:10px;}
   .columna-mini{
-    background:linear-gradient(180deg,#1B1A1D,#20212E);border:1px solid rgba(255,255,255,.05);border-radius:var(--radio);
-    padding:16px 18px 18px;width:100%;min-height:0;
+    background:radial-gradient(140% 60% at 50% -20%,rgba(255,255,255,.03),transparent 60%),linear-gradient(180deg,#1E222A,#181B21);
+    border:1px solid var(--borde);border-radius:14px;
+    padding:18px 20px 20px;width:100%;min-height:0;box-shadow:var(--s2),var(--filo);
   }
   .columna-mini.recibe{border-color:var(--acento);background:rgba(169,155,230,.09);box-shadow:0 0 0 3px var(--acento-suave);}
   .columna-mini-cabecera{
-    display:flex;align-items:center;gap:4px;margin:0 0 14px;padding-bottom:10px;
+    display:flex;align-items:center;gap:9px;margin:0 0 16px;padding-bottom:12px;
     border-bottom:1px solid var(--borde);
+  }
+  .columna-mini-cabecera::before{
+    content:"";flex-shrink:0;width:7px;height:7px;border-radius:50%;background:var(--acento);opacity:.6;
   }
   .columna-mini-nombre{
     flex:1;min-width:0;border:1px solid transparent;background:transparent;
-    border-radius:8px;padding:3px 7px;font-family:var(--titulos);font-size:13px;font-weight:600;
-    letter-spacing:.02em;color:var(--texto);
+    border-radius:8px;padding:4px 8px;font-family:var(--titulos);font-size:13.5px;font-weight:700;
+    letter-spacing:.01em;color:var(--texto);
   }
   .columna-mini-nombre:hover{background:rgba(255,255,255,.05);color:var(--texto);}
   .columna-mini-nombre:focus{outline:none;border-color:var(--acento);background:var(--superficie);color:var(--texto);}
@@ -534,22 +548,30 @@
 
   .cargando{padding:48px 30px;color:var(--texto-3);}
 
+  /* ---------- menú móvil ---------- */
+  .btn-menu-movil{display:none;}
+  .velo-menu{display:none;}
+
   /* ---------- móvil ---------- */
   @media (max-width:820px){
     .app{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto;min-height:100vh;}
-    .carril{
-      flex-direction:row;align-items:center;gap:14px;overflow-x:auto;
-      border-right:0;border-bottom:1px solid var(--borde);padding:12px 14px;
-      background:linear-gradient(180deg,#20242B,#1A1E24);
+    .btn-menu-movil{
+      display:flex;align-items:center;justify-content:center;position:fixed;top:14px;left:14px;z-index:45;
+      width:38px;height:38px;border-radius:10px;background:var(--vidrio),var(--superficie);
+      border:1px solid var(--borde-2);color:var(--texto);box-shadow:var(--s2),var(--filo);
     }
-    .carril .marca{display:none;}
-    .carril .grupo-titulo{display:none;}
-    .carril-separado{padding-top:0;border-top:0;border-left:1px solid var(--borde);padding-left:14px;}
-    .carril-pie{margin-top:0;padding:0 0 0 14px;border-top:0;border-left:1px solid var(--borde);}
-    .nav-lista{flex-direction:row;gap:6px;}
-    .nav-item{width:auto;white-space:nowrap;background:var(--vidrio),var(--superficie);box-shadow:var(--s2),var(--filo);}
-    .anadir{width:auto;margin-top:0;white-space:nowrap;}
-    .cabecera{padding:18px 18px 14px;}
+    .btn-menu-movil .ico{font-size:20px;}
+    .velo-menu{
+      display:block;position:fixed;inset:0;z-index:39;background:rgba(10,11,13,.55);
+      opacity:0;pointer-events:none;transition:opacity .18s ease;
+    }
+    .velo-menu.abierta{opacity:1;pointer-events:auto;}
+    .carril{
+      position:fixed;top:0;left:0;bottom:0;z-index:40;width:82vw;max-width:300px;
+      box-shadow:var(--s4);transform:translateX(-100%);transition:transform .2s ease;
+    }
+    .carril.abierta{transform:translateX(0);}
+    .cabecera{padding:18px 18px 14px 60px;}
     .lienzo{padding:16px 18px 44px;}
     .columna-mini{padding:14px;}
     .pila-mini{grid-template-columns:1fr;}
@@ -583,10 +605,53 @@
     .anadir-tarjeta,.anadir-columna,.columna-mini{
       transition:background-color .14s ease,border-color .14s ease,box-shadow .18s ease,transform .18s cubic-bezier(.2,.8,.3,1),opacity .14s ease;
     }
+    .punto-activo{animation:parpadeo-activo 1.4s ease-in-out infinite;}
+    .tarjeta.activa{animation:parpadeo-borde 1.4s ease-in-out infinite;}
+  }
+
+  /* ---------- tarjeta: sombreado + barra de carga ---------- */
+  .tarjeta{
+    border-radius:14px;
+    box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),0 24px 54px rgba(12,14,17,.34),var(--filo);
+  }
+  .tarjeta:hover{
+    transform:translateY(-2px);
+    box-shadow:0 2px 4px rgba(12,14,17,.55),0 14px 30px rgba(12,14,17,.44),0 38px 78px rgba(12,14,17,.42),var(--filo);
+  }
+  .tarjeta:active{transform:translateY(0);box-shadow:0 1px 2px rgba(12,14,17,.55),0 8px 20px rgba(12,14,17,.38),var(--filo);}
+  .tarjeta.activa{
+    border-color:var(--acento);
+    box-shadow:0 1px 2px rgba(12,14,17,.55),0 10px 24px rgba(12,14,17,.4),0 28px 60px rgba(12,14,17,.36),var(--filo),0 0 0 4px var(--acento-suave);
+  }
+  .tarjeta.con-acciones{padding-bottom:6px;}
+  .tarjeta-carga{
+    display:block;position:absolute;left:0;right:0;bottom:0;height:3px;
+    background:rgba(255,255,255,.07);overflow:hidden;border-radius:0 0 14px 14px;
+  }
+  .tarjeta-carga > span{
+    display:block;position:absolute;top:0;bottom:0;left:0;right:0;
+    transform-origin:left center;will-change:transform;
+    background:linear-gradient(90deg,var(--acento-suave),var(--acento));
+    box-shadow:0 0 12px var(--acento-suave);
+  }
+  @keyframes carga-tarjeta{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+  .tarjeta-estado{margin-left:9px;font-size:12px;font-weight:600;color:var(--texto-3);}
+  .tarjeta.activa .tarjeta-estado{color:var(--acento);}
+  .tarjeta-live{
+    margin-left:auto;font-family:var(--mono);font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--acento);
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .tarjeta-carga > span{animation:carga-tarjeta 6s linear infinite;}
+    .tarjeta-live{animation:parpadeo-activo 1.6s ease-in-out infinite;}
+    .tarjeta.activa{animation:none;}
   }
 </style>
 </head>
 <body>
+
+<button class="btn-menu-movil" id="btn-menu-movil" aria-label="Abrir menú"><span class="ico">menu</span></button>
+<div class="velo-menu" id="velo-menu"></div>
 
 <div class="app">
   <aside class="carril">
@@ -1065,7 +1130,7 @@
     var p = proyecto(t.proyectoId);
     var hecha = t.estado === "hecho";
     var n = diasHasta(t.vence);
-    var clases = "tarjeta p-" + t.prioridad + (hecha ? " hecha" : "") +
+    var clases = "tarjeta" + (hecha ? " hecha" : "") +
                  (!hecha && t.activa ? " activa" : "") +
                  (!hecha && n !== null && n < 0 ? " vencida" : "");
 
@@ -1088,6 +1153,7 @@
     return '<button class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
              '<span class="tarjeta-titulo">' + esc(t.titulo) + '</span>' +
              (pie.length ? '<span class="tarjeta-pie">' + pie.join("") + '</span>' : "") +
+             (!hecha && t.activa ? '<span class="tarjeta-carga"><span></span></span>' : "") +
            '</button>';
   }
 
@@ -1133,6 +1199,7 @@
 
     var html = '<div class="tablero-mini">' + p.seccionesTareas.map(function(col){
       var enCol = suyas.filter(function(t){ return t.seccion === col.id; });
+      enCol.sort(function(a, b){ return (a.activa ? 0 : 1) - (b.activa ? 0 : 1); });
       var esRapida = creacionRapida && creacionRapida.tipo === "tarea" && creacionRapida.columna === col.id;
       var rapida = esRapida
         ? '<input type="text" class="tarjeta-rapida" id="input-rapido" placeholder="Título de la tarea y Enter…" maxlength="200">'
@@ -1168,7 +1235,7 @@
 
   function pintarTarjetaProyecto(t){
     var n = diasHasta(t.vence);
-    var clases = "tarjeta con-acciones p-" + t.prioridad + (t.activa ? " activa" : "") +
+    var clases = "tarjeta con-acciones" + (t.activa ? " activa" : "") +
                  (n !== null && n < 0 ? " vencida" : "");
 
     var subtareas = t.subtareas || [];
@@ -1205,21 +1272,28 @@
       '</div>';
     }
 
-    return '<div class="fila-tarea">' +
-             '<button class="interruptor" role="switch" data-activar="' + t.id + '" aria-checked="' + !!t.activa + '" aria-label="' + (t.activa ? "Quitar en curso" : "Marcar en curso") + '" title="En curso"><span class="interruptor-bola"></span></button>' +
-             '<div class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
-               '<div class="tarjeta-cuerpo">' +
-                 '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '"><span class="tarjeta-titulo">' + esc(t.titulo) + '</span></button>' +
-                 (pie.length ? '<div class="tarjeta-pie">' + pie.join("") + '</div>' : "") +
-                 subtareasHtml +
+    var activarHtml = '<button class="interruptor" role="switch" data-activar="' + t.id + '" aria-checked="' + !!t.activa + '" aria-label="' + (t.activa ? "Quitar en curso" : "Marcar en curso") + '" title="En curso"><span class="interruptor-bola"></span></button>';
+
+    return '<div class="' + clases + '" draggable="true" data-tarea="' + t.id + '">' +
+             '<div class="tarjeta-cuerpo">' +
+               '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '">' +
+                 (t.activa ? '<span class="punto-activo"></span>' : "") +
+                 '<span class="tarjeta-titulo">' + esc(t.titulo) + '</span>' +
+               '</button>' +
+               (pie.length ? '<div class="tarjeta-pie">' + pie.join("") + '</div>' : "") +
+               subtareasHtml +
+               '<div class="tarjeta-pie-activar">' + activarHtml +
+                 '<span class="tarjeta-estado">' + (t.activa ? "En curso" : "En espera") + '</span>' +
+                 (t.activa ? '<span class="tarjeta-live">&#9679; live</span>' : "") +
                '</div>' +
-               '<button class="tarjeta-completar" data-completar="' + t.id + '" aria-label="Marcar como hecha" title="Marcar como hecha"><span class="ico ico-sm">close</span></button>' +
              '</div>' +
+             '<button class="tarjeta-completar" data-completar="' + t.id + '" aria-label="Marcar como hecha" title="Marcar como hecha"><span class="ico ico-sm">close</span></button>' +
+             (t.activa ? '<div class="tarjeta-carga"><span></span></div>' : "") +
            '</div>';
   }
 
   function pintarTarjetaFinalizada(t){
-    return '<div class="tarjeta con-acciones hecha p-' + t.prioridad + '" data-tarea="' + t.id + '">' +
+    return '<div class="tarjeta con-acciones hecha" data-tarea="' + t.id + '">' +
              '<div class="tarjeta-cuerpo">' +
                '<button class="tarjeta-titulo-btn" data-tarea="' + t.id + '"><span class="tarjeta-titulo">' + esc(t.titulo) + '</span></button>' +
              '</div>' +
@@ -2130,17 +2204,30 @@
     if(e.key === "Escape" && !document.getElementById("velo").hidden) cerrarModal();
   });
 
+  function abrirMenuMovil(){
+    document.querySelector(".carril").classList.add("abierta");
+    document.getElementById("velo-menu").classList.add("abierta");
+  }
+  function cerrarMenuMovil(){
+    document.querySelector(".carril").classList.remove("abierta");
+    document.getElementById("velo-menu").classList.remove("abierta");
+  }
+
+  document.getElementById("btn-menu-movil").addEventListener("click", abrirMenuMovil);
+  document.getElementById("velo-menu").addEventListener("click", cerrarMenuMovil);
+
   document.querySelector(".carril").addEventListener("click", function(e){
     var b = e.target.closest("button");
     if(!b) return;
-    if(b.id === "btn-nuevo-proyecto"){ abrirProyecto(null); return; }
+    if(b.id === "btn-nuevo-proyecto"){ cerrarMenuMovil(); abrirProyecto(null); return; }
     if(b.dataset.vista){
       estado.vista = b.dataset.vista; estado.proyectoActivo = null;
       filtros = { prioridad:"", proyecto:"", texto:"", verHechas:false };
-      guardar(); pintar(); return;
+      guardar(); pintar(); cerrarMenuMovil(); return;
     }
     if(b.dataset.proyecto){
       estado.vista = "proyecto"; estado.proyectoActivo = b.dataset.proyecto; estado.subVistaProyecto = "tablero"; guardar(); pintar();
+      cerrarMenuMovil();
     }
   });
 
@@ -2279,7 +2366,7 @@
     if(estado.vista === "proyecto" && estado.subVistaProyecto === "tablero"){
       if(e.target.closest(".tarjeta-rapida")) return;
       if(e.target.closest(".columna-mini-cabecera")) return;
-      if(e.target.closest(".fila-tarea")) return;
+      if(e.target.closest(".tarjeta")) return;
       var col = e.target.closest(".seccion-tarea");
       if(col && (!creacionRapida || creacionRapida.tipo !== "tarea" || creacionRapida.columna !== col.dataset.col)){
         creacionRapida = { tipo:"tarea", columna: col.dataset.col };
